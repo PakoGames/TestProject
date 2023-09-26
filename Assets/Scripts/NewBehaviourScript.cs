@@ -31,6 +31,8 @@ public class NewBehaviourScript : MonoBehaviour
 
         MyClass mc = new MyClass();
 
+        
+
         var gf = mc;
 
         Debug.Log($"short: {short.MinValue} - {short.MaxValue}");
@@ -53,39 +55,3 @@ public class NewBehaviourScript : MonoBehaviour
 }
 
 
-public class MyList
-{
-
-    private int[] m_array = new int[4];
-
-    public int count {get; }
-    public void Push()
-    {
-
-    }
-
-    public void Insert(int item)
-    {
-
-    }
-
-    public int IndexOf(int item)
-    {
-        return 0;
-    }
-
-    public void Remove(int item)
-    {
-
-    }
-
-    public void RemoveAt(int index)
-    {
-
-    }
-
-    public void Clear()
-    {
-
-    }
-}
