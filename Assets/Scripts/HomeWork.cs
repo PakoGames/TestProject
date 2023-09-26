@@ -111,7 +111,7 @@ public class MyList
 
                 m_array = remove;
                 c--;
-                return true;
+                break;
             }
         }
         return false;
