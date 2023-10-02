@@ -2,101 +2,240 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Diagnostics;
 
+#region 2 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+//public class MyList
+//{
+//    private int[] m_array;
+//    public int Count { get; private set; }
+//
+//    public int Capacity
+//    {
+//        get { return m_array.Length; }
+//        set
+//        {
+//            if (value > m_array.Length)
+//            {
+//                System.Array.Resize(ref m_array, value);
+//            }
+//        }
+//    }
+//
+//    public MyList()
+//    {
+//        m_array = new int[4];
+//    }
+//
+//    public MyList(int capacity)
+//    {
+//        m_array = new int[capacity];
+//    }
+//
+//    public int this[int index]
+//    {
+//        get
+//        {
+//            CheckIndexRange(index);
+//            return m_array[index];
+//        }
+//        set
+//        {
+//            CheckIndexRange(index);
+//            m_array[index] = value;
+//        }
+//    }
+//
+//    private bool CheckIndexRange(int index)
+//    {
+//        if (index < 0 || index >= Count)
+//            throw new ArgumentOutOfRangeException();
+//
+//        return true;
+//    }
+//
+//    private void IncreaseCapacityIfNeed()
+//    {
+//        if (Count == Capacity)
+//        {
+//            Capacity *= 2;
+//        }
+//    }
+//
+//    public void Add(int item)
+//    {
+//        IncreaseCapacityIfNeed();
+//
+//        m_array[Count] = item;
+//        Count++;
+//    }
+//
+//    public void Insert(int index, int item)
+//    {
+//        if (index < 0 || index > Count)
+//        {
+//            throw new ArgumentOutOfRangeException();
+//        }
+//
+//        IncreaseCapacityIfNeed();
+//
+//        if (index < Count)
+//        {
+//            System.Array.Copy(m_array, index, m_array, index + 1, Count - index);
+//        }
+//
+//        Count++;
+//        m_array[index] = item;
+//    }
+//
+//    public int IndexOf(int item)
+//    {
+//        for (int i = 0; i < Count; i++)
+//        {
+//            if (m_array[i] == item)
+//            {
+//                return i;
+//            }
+//        }
+//
+//        return -1;
+//    }
+//
+//    public bool Remove(int item)
+//    {
+//        int index = IndexOf(item);
+//        if (index >= 0)
+//        {
+//            RemoveAt(index);
+//            return true;
+//        }
+//
+//        return false;
+//    }
+//
+//    public void RemoveAt(int index)
+//    {
+//        CheckIndexRange(index);
+//        Count--;
+//        if (index < Count)
+//        {
+//            System.Array.Copy(m_array, index + 1, m_array, index, Count - index);
+//        }
+//    }
+//
+//    public bool Contains(int item)
+//    {
+//        return IndexOf(item) >= 0;
+//    }
+//
+//    public void Clear()
+//    {
+//        System.Array.Clear(m_array, 0, m_array.Length);
+//        Count = 0;
+//    }
+//}
+#endregion
 
-public class MyList
+public class MyList<T>
 {
-
-    public int c = 0;
-    public int cNum = 0;
-    private int[] m_array = new int[4];
-
-    public int Count
-    {
-        get => c;
-        private set { Count = c; }
-    }
+    private T[] m_array;
+    public int Count { get; private set; }
 
     public int Capacity
     {
-        get
-        {
-            int num = 2;
-            int step = 1;
-            while (m_array.Length > (int)Math.Pow(num, step))
-            {
-                step++;
-
-            }
-            num = (int)Math.Pow(num, step);
-            return num;
-        }
+        get { return m_array.Length; }
         set
         {
-            cNum = value;
+            if (value > m_array.Length)
+            {
+                System.Array.Resize(ref m_array, value);
+            }
         }
     }
 
     public MyList()
     {
-
+        m_array = new T[4];
     }
 
     public MyList(int capacity)
     {
-        Capacity = capacity;
+        m_array = new T[capacity];
     }
 
-    public int this[int index]
+    public T this[int index]
     {
         get
         {
+            CheckIndexRange(index);
             return m_array[index];
         }
         set
         {
+            CheckIndexRange(index);
             m_array[index] = value;
         }
     }
 
-    public void Add(int item)
+    private bool CheckIndexRange(int index)
     {
-        int[] add = new int[m_array.Length + 1];
+        if (index < 0 || index >= Count)
+            throw new ArgumentOutOfRangeException();
 
-        if (c < m_array.Length)
+        return true;
+    }
+
+    private void IncreaseCapacityIfNeed()
+    {
+        if (Count == Capacity)
         {
-            m_array[c] = item;
-            c++;
-        }
-
-        else
-        {
-            for (int i = 0; i < m_array.Length; i++)
-                add[i] = m_array[i];
-
-            m_array = add;
-            m_array[c] = item;
-            c++;
+            Capacity *= 2;
         }
     }
 
-    public void Insert(int index, int item)
+    public void Add(T item)
     {
+        IncreaseCapacityIfNeed();
 
+        m_array[Count] = item;
+        Count++;
+    }
+
+    public void Insert(int index, T item)
+    {
+        if (index < 0 || index > Count)
+        {
+            throw new ArgumentOutOfRangeException();
+        }
+
+        IncreaseCapacityIfNeed();
+
+        if (index < Count)
+        {
+            System.Array.Copy(m_array, index, m_array, index + 1, Count - index);
+        }
+
+        Count++;
         m_array[index] = item;
-
     }
 
-    public int IndexOf(int item)
+    public int IndexOf(T item)
     {
+        for (int i = 0; i < Count; i++)
+        {
+            if (m_array[i].Equals(item))
+            {
+                return i;
+            }
+        }
+
         return -1;
     }
 
-    public bool Remove(int item)
+    public bool Remove(T item)
     {
-        int[] remove = new int[m_array.Length - 1];
-
-        for (int i = 0; i < m_array.Length; i++)
+        int index = IndexOf(item);
+        if (index >= 0)
         {
             if (m_array[i] == item)
             {
@@ -114,77 +253,98 @@ public class MyList
                 break;
             }
         }
-        return false;
 
+        return false;
     }
 
     public void RemoveAt(int index)
     {
-        int[] remove = new int[m_array.Length - 1];
-
-        for (int i = 0; i < index; i++)
-            remove[i] = m_array[i];
-
-        for (int i = index + 1; i < m_array.Length; i++)
-            remove[i - 1] = m_array[i];
-
-        m_array = remove;
-        c--;
-
+        CheckIndexRange(index);
+        Count--;
+        if (index < Count)
+        {
+            System.Array.Copy(m_array, index + 1, m_array, index, Count - index);
+        }
     }
 
-    public bool Contains(int item)
+    public bool Contains(T item)
     {
-        return false;
+        return IndexOf(item) >= 0;
     }
 
     public void Clear()
     {
-
-        for (int i = 0; i < m_array.Length; i++)
-        {
-                m_array[i] = 0;
-        }
+        System.Array.Clear(m_array, 0, m_array.Length);
+        Count = 0;
     }
 }
-
 
 public class HomeWork : MonoBehaviour
 {
     public void Start()
     {
+        #region 2 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        // MyList myList = new MyList();
+        // myList.Add(1);
+        // myList.Add(5);
+        // myList.Add(UnityEngine.Random.Range(1, 10));
+        // myList.Add(UnityEngine.Random.Range(1, 10));
+        // myList.Add(UnityEngine.Random.Range(1, 10));
+        // UnityEngine.Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ 5 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+        // UnityEngine.Debug.Log($" m_array.Length = {myList.Count} And Capacity = " + myList.Capacity);
+        // UnityEngine.Debug.Log(" ");
+        // myList.Insert(1, 3);
+        // myList.Remove(3);
+        // myList.RemoveAt(0);
+        // UnityEngine.Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ 2 пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ");
+        // UnityEngine.Debug.Log($" m_array.Length ={myList.Count} And Capacity = " + myList.Capacity);
+        // UnityEngine.Debug.Log(" ");
+        //
+        // UnityEngine.Debug.Log("Count = " + myList.Count);
+        //
+        // for (int i = 0; i < myList.Count; ++i)
+        // {
+        //     UnityEngine.Debug.Log($"index {i}, item = " + myList[i]);
+        // }
+        //
+        // myList.Clear();
+        // UnityEngine.Debug.Log(" ");
+        // UnityEngine.Debug.Log("Clear test");
+        // for (int i = 0; i < myList.Count; ++i)
+        // {
+        //     UnityEngine.Debug.Log($"index {i}, item = " + myList[i]);
+        // }
+        #endregion
 
-        MyList myList = new MyList();
-        myList.Add(1);
-        myList.Add(5);
-        myList.Add(UnityEngine.Random.Range(1, 10));
-        myList.Add(UnityEngine.Random.Range(1, 10));
-        myList.Add(UnityEngine.Random.Range(1, 10));
-        Debug.Log("Добавили в массив 5 эллементов");
-        Debug.Log($" m_array.Length = {myList.Count} And Capacity = " + myList.Capacity);
-        Debug.Log(" ");
-        myList.Insert(1, 3);
-        myList.Remove(3);
-        myList.RemoveAt(0);
-        Debug.Log("Удалили из массива 2 эллемента");
-        Debug.Log($" m_array.Length ={myList.Count} And Capacity = " + myList.Capacity);
-        Debug.Log(" ");
 
-        Debug.Log("Count = " + myList.Count);
 
-        for (int i = 0; i < myList.Count; ++i)
+
+
+        MyList<MyClass> originalList = new MyList<MyClass>();
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
+        Stopwatch originalStopwatch = Stopwatch.StartNew();
+        for (int i = 0; i < 1000000; i++)
         {
-            Debug.Log($"index {i}, item = " + myList[i]);
+            originalList.Add(new MyClass());
         }
+        originalList.RemoveAt(350);
+        originalList.IndexOf(new MyClass());
+        originalStopwatch.Stop();
+        UnityEngine.Debug.Log("Original Code Elapsed Time: " + originalStopwatch.ElapsedMilliseconds);
 
-        myList.Clear();
-        Debug.Log(" ");
-        Debug.Log("Clear test");
-        for (int i = 0; i < myList.Count; ++i)
+
+        List<MyClass> genericList = new List<MyClass>();
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
+        Stopwatch genericStopwatch = Stopwatch.StartNew();
+        for (int i = 0; i < 1000000; i++)
         {
-            Debug.Log($"index {i}, item = " + myList[i]);
+            genericList.Add(new MyClass());
         }
-        
+        genericList.RemoveAt(350);
+        genericList.IndexOf(new MyClass());
+        genericStopwatch.Stop();
+        UnityEngine.Debug.Log("Generic Code Elapsed Time: " + genericStopwatch.ElapsedMilliseconds);
     }
 
 }
